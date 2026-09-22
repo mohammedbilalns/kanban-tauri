@@ -18,11 +18,14 @@ export function useTasks(){
 
         if(!cancelled){
           setTasks(rows)
-          setLoading(false)
         }
 
       }catch(error){
         console.error(error)
+      } finally {
+        if (!cancelled) {
+          setLoading(false)
+        }
       }
     }
 

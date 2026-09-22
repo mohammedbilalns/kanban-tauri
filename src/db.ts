@@ -15,7 +15,7 @@ export async function initDb(): Promise<void>{
   const db = await getDb()
   await db.execute(
     `CREATE TABLE IF NOT EXISTS  tasks (
-id INTEGER PRIMARY KEY AUTOINCREMNT,
+id INTEGER PRIMARY KEY AUTOINCREMENT,
 title TEXT NOT NULL,
 status TEXT NOT NULL DEFAULT 'todo'
 CHECK (status IN ('todo', 'doing', 'done')),
