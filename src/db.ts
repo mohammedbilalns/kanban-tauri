@@ -59,7 +59,7 @@ export async function addTask(title : string, status : Status): Promise<void>{
   )
 }
 
-export async function deleteTaks(id : number): Promise<void>{
+export async function deleteTasks(id : number): Promise<void>{
   const db = await getDb()
   await db.execute(`DELETE FROM tasks WHERE id = $1 `, [id])
 }
