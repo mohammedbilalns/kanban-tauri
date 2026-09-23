@@ -55,6 +55,10 @@ export function useTasks(){
     setTasks(await getTasks())
   }, [] )
 
+  const updateTitle = useCallback(async (id : number, title : string) => {
+    await updateTaskTitle(id, title)
+    setTasks(await getTasks())
+  })
 
   const move = useCallback(
     async (id : number, status: Status, index: number) => {
@@ -81,7 +85,7 @@ export function useTasks(){
     }, [tasks]
   )
 
-  return {loading, byStatus, add, remove, move}
+  return {loading, byStatus, add, remove, move, updateTitle}
 
 
 }

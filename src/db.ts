@@ -64,6 +64,11 @@ export async function deleteTasks(id : number): Promise<void>{
   await db.execute(`DELETE FROM tasks WHERE id = $1 `, [id])
 }
 
+export async function updateTaskTitle(id : number, title : string): Promise<void>{
+  const db = await getDb()
+  await db.execute(`UPDATE tasks SET title = $1 WHERE id = $2 `, [title, id])
+}
+
 export async function saveColumn(status: Status , orderIds: number[]): Promise<void>{
   const db = await getDb()
   for (let i=0 ; i< orderIds.length; i++){

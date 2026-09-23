@@ -1,6 +1,7 @@
 import { Fragment, useEffect, useRef, useState } from 'react';
 import type { DragEvent } from 'react';
 import type { Status, Task } from '../types';
+import { Card } from './Card';
 
 interface ColumnProps {
   status: Status;
@@ -9,9 +10,10 @@ interface ColumnProps {
   onAdd: (title: string, status: Status) => void;
   onDelete: (id: number) => void;
   onMove: (id: number, status: Status, index: number) => void;
+  onRename: (id: number, title: string) => void;
 }
 
-export function Column({ status, label, tasks, onAdd, onDelete, onMove }: ColumnProps) {
+export function Column({ status, label, tasks, onAdd, onDelete, onMove,onRename }: ColumnProps) {
   const [title, setTitle] = useState('');
   const [composerOpen, setComposerOpen] = useState(false);
   const [dropIdx, setDropIdx] = useState<number | null>(null);
@@ -106,27 +108,8 @@ export function Column({ status, label, tasks, onAdd, onDelete, onMove }: Column
         {tasks.map((task, i) => (
           <Fragment key={task.id}>
             {dropIdx === i && <div className="drop-indicator" aria-hidden />}
-            <article
-              className="card"
-              draggable
-              onDragStart={(e) => {
-                e.dataTransfer.setData('text/plain', String(task.id));
-                e.dataTransfer.effectAllowed = 'move';
-                e.currentTarget.classList.add('dragging');
-              }}
-              onDragEnd={(e) => e.currentTarget.classList.remove('dragging')}
-            >
-              <span className="title">{task.title}</span>
-              <button
-                className="delete"
-                aria-label={`Delete ${task.title}`}
-                onClick={() => onDelete(task.id)}
-              >
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round">
-                  <path d="M18 6 6 18M6 6l12 12" />
-                </svg>
-              </button>
-            </article>
+          
+            <Card task={task} onDelete={onDelete} onRename={onRename} />
           </Fragment>
         ))}
 
